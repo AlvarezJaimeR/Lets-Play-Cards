@@ -46,4 +46,26 @@ router.post("/", async (req, res) => {
     }
 });
 
+//get a single user page (dashboard)
+router.get("/:user", async (req, res) => {
+  models.User.findOne({
+    where: {
+      user: req.params.user
+    }
+  }).then(user => {
+    if (!user) {
+      return res.render("error", {
+        message: "Page not found",
+        error: {
+          status: 404
+        }
+      })
+    }
+
+    user = user.get({plain: true});
+
+  })
+
+});
+
 module.exports = router;
