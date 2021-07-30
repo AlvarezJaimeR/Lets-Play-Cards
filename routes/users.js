@@ -46,6 +46,17 @@ router.post("/", async (req, res) => {
     }
 });
 
+
+//get a single user
+router.get("/:userId", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    return res.send(user);
+  } catch (ex){
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
 //update a user
 router.put("/:userId", auth, async (req, res) => {
     try {
