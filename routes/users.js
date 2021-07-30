@@ -46,26 +46,32 @@ router.post("/", async (req, res) => {
     }
 });
 
-//get a single user page (dashboard)
-router.get("/:user", async (req, res) => {
-  models.User.findOne({
-    where: {
-      user: req.params.user
-    }
-  }).then(user => {
-    if (!user) {
-      return res.render("error", {
-        message: "Page not found",
-        error: {
-          status: 404
+
+//get a single user
+router.get("/:userId", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    return res.send(user);
+  } catch (ex){
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+//update a user
+router.put("/:userId", auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        if (!user) return res.status(400).send(`The user id ${req.params.userId} doesn't exist.`);
+
+        if (req.body.userName != null) {
+            user.userName = req.body.userName;
         }
-      })
+        
+        await user.save();
+        return res.send(user);
+    }   catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
     }
-
-    user = user.get({plain: true});
-
-  })
-
 });
 
 module.exports = router;
