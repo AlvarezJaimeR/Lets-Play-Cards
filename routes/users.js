@@ -46,4 +46,21 @@ router.post("/", async (req, res) => {
     }
 });
 
+//update a user
+router.put("/:userId", auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        if (!user) return res.status(400).send(`The user id ${req.params.userId} doesn't exist.`);
+
+        if (req.body.userName != null) {
+            user.userName = req.body.userName;
+        }
+        
+        await user.save();
+        return res.send(user);
+    }   catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
 module.exports = router;
