@@ -7,6 +7,9 @@ const userSchema = new mongoose.Schema({
     userName: {type: String, require: true, minlength: 2, maxlength: 255},
     email: { type: String, require: true, minlength: 2, maxlength: 255 },
     password: { type: String, require: true, minlength: 3, maxlength: 1024 },
+    games: {type: String},
+    wins: {type: String},
+    loses: {type: String}
 });
 
 userSchema.methods.generateAuthToken = function () {
@@ -14,6 +17,9 @@ userSchema.methods.generateAuthToken = function () {
         {
             _id: this._id,
             userName: this.userName,
+            games: this.games,
+            wins: this.wins,
+            loses: this.loses
         },
         config.get("jwtSecret")
     );
