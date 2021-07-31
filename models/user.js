@@ -7,9 +7,9 @@ const userSchema = new mongoose.Schema({
     userName: {type: String, require: true, minlength: 2, maxlength: 255},
     email: { type: String, require: true, minlength: 2, maxlength: 255 },
     password: { type: String, require: true, minlength: 3, maxlength: 1024 },
-    games: {type: String},
-    wins: {type: String},
-    loses: {type: String}
+    games: {type: String, default: 0},
+    wins: {type: String, default: 0},
+    loses: {type: String, default: 0}
 });
 
 userSchema.methods.generateAuthToken = function () {
