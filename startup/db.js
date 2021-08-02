@@ -3,7 +3,7 @@ const config = require('config');
 
 function connectDB() {
     mongoose.connect(
-        config.get('mongoURI'),
+        config.get(process.env.MONGODB_URI || 'mongoURI'),
         {useNewUrlParser: true, useUnifiedTopology: true})
         .then(() => console.log('Connected to MongoDB...'))
         .catch((err) => {
