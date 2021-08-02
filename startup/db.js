@@ -5,7 +5,7 @@ var uri = process.env.MONGODB_URI || process.env.MONGOHQ_URL || process.env.MONG
 
 function connectDB() {
     mongoose.connect(
-        config.get(uri || 'mongoURI'),
+        uri || config.get('mongoURI'),
         {useNewUrlParser: true, useUnifiedTopology: true})
         .then(() => console.log('Connected to MongoDB...'))
         .catch((err) => {
