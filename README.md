@@ -1,2 +1,2 @@
 # Lets-Play-Cards
-## POKER or GIN RUMMY
+## WAR card game back-end - written in Node.js
