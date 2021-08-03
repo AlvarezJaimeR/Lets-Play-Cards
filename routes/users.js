@@ -73,6 +73,21 @@ router.put('/:userId/win', async (req, res) => {
     }
 });
 
+//increase the game counter on a tie
+router.put('/:userId/tie', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        if (!user) return res.status(400).send(`The user id ${req.params.userId} does not exist.`);
+
+        user.games ++;
+
+        await user.save();
+        return res.send(user);
+    }   catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
 //increase the loss counter
 router.put('/:userId/lose', async (req, res) => {
     try {
